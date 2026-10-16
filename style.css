@@ -1,0 +1,319 @@
+
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --pembe: #f6a8d5;
+    --mor: #c6a0ff;
+    --yazi: #773c79;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Trebuchet MS", Arial, sans-serif;
+    background: linear-gradient(135deg, #fff0f8, #f8d9f4, #e4d8ff);
+    background-size: 250% 250%;
+    animation: arkaPlan 12s ease infinite;
+    color: var(--yazi);
+}
+
+#baslangic {
+    width: min(90%, 620px);
+    padding: 42px 24px;
+    text-align: center;
+    border: 1px solid #ffffffc9;
+    border-radius: 30px;
+    background: #ffffffbd;
+    box-shadow: 0 20px 65px #b46cb933;
+    backdrop-filter: blur(12px);
+    animation: kartGel 1s ease both;
+}
+
+.baslangic-kalbi {
+    color: #ed83ba;
+    font-size: 76px;
+    line-height: 1.2;
+    text-shadow: 0 0 25px #f7a8d8;
+    animation: kalpAtisi 1.2s ease-in-out infinite;
+}
+
+#baslangic h1 {
+    margin: 18px 0 12px;
+    color: #bd477e;
+    font-size: clamp(27px, 5vw, 43px);
+}
+
+#baslangic p {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #87516f;
+}
+
+button {
+    margin-top: 18px;
+    padding: 15px 30px;
+    border: 0;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #f39bc9, #bb75c7);
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 8px 28px #c27bbd55;
+    transition: transform .25s, box-shadow .25s;
+}
+
+button:hover {
+    transform: translateY(-3px) scale(1.04);
+    box-shadow: 0 12px 35px #c27bbd80;
+}
+
+/* Uçuşan küçük kalpler */
+
+.ucanKalp,
+.parilti {
+    position: fixed;
+    z-index: 5;
+    pointer-events: none;
+    will-change: transform, opacity;
+}
+
+.ucanKalp {
+    line-height: 1;
+    animation: kalpUcusu var(--sure) ease-out forwards;
+}
+
+.parilti {
+    width: var(--boyut);
+    height: var(--boyut);
+    border-radius: 50%;
+    background: white;
+    box-shadow: 0 0 12px 4px #f7c9ff, 0 0 25px #e6a7f5;
+    animation: pariltiUcusu var(--sure) ease-out forwards;
+}
+
+/* Son ekran */
+
+#sonEkran {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 2;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background:
+        radial-gradient(ellipse at center, #ffffffb8 0%, #f8d8f355 42%, transparent 72%),
+        linear-gradient(135deg, #fceafa, #e8d8ff, #f8d8f3);
+}
+
+#sonEkran.goster {
+    display: flex;
+    animation: ekranGel 1s ease both;
+}
+
+/* Işık halkası */
+
+.isikHalkasi {
+    position: absolute;
+    width: min(85vw, 470px);
+    aspect-ratio: 1;
+    border: 2px solid #ffffffc0;
+    border-radius: 50%;
+    box-shadow: 0 0 35px #e4a6f4a0, inset 0 0 35px #e4a6f450;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.isikHalkasi::before,
+.isikHalkasi::after {
+    content: "";
+    position: absolute;
+    inset: 10%;
+    border: 1px solid #ffffffa0;
+    border-radius: 50%;
+}
+
+.isikHalkasi::after {
+    inset: -10%;
+    border-color: #e6b6f580;
+}
+
+#sonEkran.goster .isikHalkasi {
+    animation: halkaAc 1.5s ease-out .2s forwards;
+}
+
+/* Büyük kalp */
+
+.kalp-sahnesi {
+    position: relative;
+    width: min(90vw, 560px);
+    aspect-ratio: 512 / 460;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    isolation: isolate;
+}
+
+#buyukKalp {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    opacity: 0;
+    transform: scale(.35);
+    filter: drop-shadow(0 15px 24px #b76e9b65);
+}
+
+#kalpSekli {
+    fill: url(#kalpRenkleri);
+    stroke: #f8d7f2;
+    stroke-width: 4;
+}
+
+#sonEkran.goster #buyukKalp {
+    animation: kalpGel 1.4s cubic-bezier(.2, .8, .2, 1) .3s forwards;
+}
+
+#sonEkran.goster #kalpSekli {
+    animation: kalpParla 2s ease-in-out 1.7s infinite alternate;
+}
+
+/* Mesaj: harfler tek tek değil, normal metin */
+
+#kalpMesaji {
+    position: absolute;
+    z-index: 3;
+    left: 50%;
+    top: 48%;
+    transform: translate(-50%, -35%);
+    width: 76%;
+    text-align: center;
+    color: #71366f;
+    font-size: clamp(18px, 4.2vw, 32px);
+    font-weight: bold;
+    line-height: 1.5;
+    text-shadow: 0 2px 12px #ffffffd9;
+    overflow-wrap: normal;
+    word-break: normal;
+    opacity: 0;
+}
+
+#ilkSatir,
+#ikinciSatir {
+    display: block;
+    width: 100%;
+    text-align: center;
+    white-space: nowrap;
+}
+
+#ikinciSatir {
+    margin-top: 4px;
+}
+
+#sonEkran.goster #kalpMesaji {
+    animation: mesajGel 1s ease 1.4s forwards;
+}
+
+/* Animasyonlar */
+
+@keyframes arkaPlan {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+@keyframes kartGel {
+    from { opacity: 0; transform: translateY(18px) scale(.96); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes kalpAtisi {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.12); }
+}
+
+@keyframes kalpUcusu {
+    0% {
+        transform: translate(-50%, -50%) scale(.4) rotate(0);
+        opacity: 0;
+    }
+    15% { opacity: 1; }
+    100% {
+        transform: translate(
+            calc(-50% + var(--x)),
+            calc(-50% + var(--y))
+        ) scale(1.15) rotate(var(--donus));
+        opacity: 0;
+    }
+}
+
+@keyframes pariltiUcusu {
+    0% {
+        transform: translate(-50%, -50%) scale(.2);
+        opacity: 0;
+    }
+    20% { opacity: 1; }
+    100% {
+        transform: translate(
+            calc(-50% + var(--x)),
+            calc(-50% + var(--y))
+        ) scale(0);
+        opacity: 0;
+    }
+}
+
+@keyframes ekranGel {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes halkaAc {
+    0% { opacity: 0; transform: scale(.3) rotate(-25deg); }
+    60% { opacity: 1; }
+    100% { opacity: .8; transform: scale(1) rotate(0); }
+}
+
+@keyframes kalpGel {
+    0% { opacity: 0; transform: scale(.25) rotate(-12deg); }
+    70% { opacity: 1; transform: scale(1.06) rotate(3deg); }
+    100% { opacity: 1; transform: scale(1) rotate(0); }
+}
+
+@keyframes kalpParla {
+    from { filter: drop-shadow(0 0 8px #e9b9e8); }
+    to { filter: drop-shadow(0 0 27px #dba5e8); }
+}
+
+@keyframes mesajGel {
+    from { opacity: 0; transform: translate(-50%, -25%); }
+    to { opacity: 1; transform: translate(-50%, -50%); }
+}
+
+@media (max-width: 480px) {
+    .kalp-sahnesi {
+        width: 96vw;
+    }
+
+    #kalpMesaji {
+        width: 78%;
+        font-size: clamp(15px, 4.3vw, 21px);
+    }
+
+    #ikinciSatir {
+        font-size: .88em;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+}
